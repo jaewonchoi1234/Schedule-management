@@ -6,6 +6,7 @@ import com.sparta.schedulemanagement.Dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.Entity.Schedule;
 import com.sparta.schedulemanagement.Repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,17 +34,20 @@ public class ScheduleService {
     }
 
     public List<ScheduleResponseDto> getSchedules() {
-        return scheduleRepository.findAll();
+        return scheduleRepository.findAll().stream().map(ScheduleResponseDto::new).toList();
     }
 
     public ScheduleResponseDto getSchedule(Long id) {
-        return new ScheduleResponseDto(scheduleRepository.findById(id));
+        return new ScheduleResponseDto(findScheduleById(id));
     }
 
+    @Transactional
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
-        if(requestDto.getPassword().equals(scheduleRepository.findById(id).getPassword())){
-            scheduleRepository.update(id, requestDto);
-            return new ScheduleResponseDto(scheduleRepository.findById(id));
+        Schedule schedule = findScheduleById(id);
+        if(requestDto.getPassword().equals(schedule.getPassword()))
+        {
+            schedule.update(requestDto);
+            return new ScheduleResponseDto(schedule);
         }else {
             throw new IllegalArgumentException("비밀번호가 틀립니다.");
         }
@@ -51,13 +55,17 @@ public class ScheduleService {
 
 
     public Long deleteSchedule(Long id, String password) {
-        if(password.equals(scheduleRepository.findById(id).getPassword())){
-            scheduleRepository.delete(id);
+        Schedule schedule = findScheduleById(id);
+        if(password.equals(schedule.getPassword())){
+            scheduleRepository.delete(schedule);
             return id;
         }else {
             throw new IllegalArgumentException("비밀번호가 틀립니다.");
         }
     }
 
-
+    private Schedule findScheduleById(Long id) {
+        return scheduleRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("선택한 일정은 존재하지 않습니다."));
+    }
 }

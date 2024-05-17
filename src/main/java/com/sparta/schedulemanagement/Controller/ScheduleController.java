@@ -3,9 +3,7 @@ package com.sparta.schedulemanagement.Controller;
 
 import com.sparta.schedulemanagement.Dto.ScheduleRequestDto;
 import com.sparta.schedulemanagement.Dto.ScheduleResponseDto;
-import com.sparta.schedulemanagement.Entity.Schedule;
 import com.sparta.schedulemanagement.Service.ScheduleService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
