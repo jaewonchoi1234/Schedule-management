@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "schedule")
 @NoArgsConstructor
-public class Schedule {
+public class Schedule extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,15 +24,13 @@ public class Schedule {
     private String manager;
     @Column(name = "password", nullable = false, length = 50)
     private String password;
-    @Column(name = "date", nullable = false, length = 50)
-    private String date;
+
 
     public Schedule(ScheduleRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
         this.password = requestDto.getPassword();
-        this.date = requestDto.getDate();
     }
 
     public void update(ScheduleRequestDto requestDto) {

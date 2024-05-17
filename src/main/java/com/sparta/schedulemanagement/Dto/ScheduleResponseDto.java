@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -15,7 +17,8 @@ public class ScheduleResponseDto {
     private String contents;
     private String manager;
     private String password;
-    private String date;
+    private LocalDateTime createAt;
+    private LocalDateTime modifiedAt;
 
     public ScheduleResponseDto(Schedule Schedule) {
         this.id = Schedule.getId();
@@ -23,6 +26,7 @@ public class ScheduleResponseDto {
         this.contents = Schedule.getContents();
         this.manager = Schedule.getManager();
         this.password = Schedule.getPassword();
-        this.date = Schedule.getDate();
+        this.createAt = Schedule.getCreatedAt();
+        this.modifiedAt = Schedule.getModifiedAt();
     }
 }
