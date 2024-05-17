@@ -4,6 +4,8 @@ package com.sparta.schedulemanagement.Controller;
 import com.sparta.schedulemanagement.Dto.ScheduleRequestDto;
 import com.sparta.schedulemanagement.Dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.Service.ScheduleService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,8 +45,18 @@ public class ScheduleController {
     }
 
 
-    @DeleteMapping("/schedule")
-    public Long deleteSchedule(@RequestBody ScheduleRequestDto requestDto) {
-        return scheduleService.deleteSchedule(requestDto.getId(), requestDto.getPassword());
+    @DeleteMapping("/schedule/{id}")
+    public Long deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+        return scheduleService.deleteSchedule(id, requestDto.getPassword());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleCustomException(IllegalArgumentException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<String> handleCustomException(NullPointerException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

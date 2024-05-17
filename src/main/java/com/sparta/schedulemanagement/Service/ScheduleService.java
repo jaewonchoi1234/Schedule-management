@@ -66,6 +66,6 @@ public class ScheduleService {
 
     private Schedule findScheduleById(Long id) {
         return scheduleRepository.findById(id).orElseThrow(()->
-                new IllegalArgumentException("선택한 일정은 존재하지 않습니다."));
+                new NullPointerException("선택한 일정은 삭제되어 있습니다."));
     }
 }
