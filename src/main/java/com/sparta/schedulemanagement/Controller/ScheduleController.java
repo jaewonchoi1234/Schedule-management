@@ -4,16 +4,18 @@ package com.sparta.schedulemanagement.Controller;
 import com.sparta.schedulemanagement.Dto.ScheduleRequestDto;
 import com.sparta.schedulemanagement.Dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.Service.ScheduleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-@Api
 @RestController
 @RequestMapping("/api")
 public class ScheduleController {
@@ -25,40 +27,50 @@ public class ScheduleController {
     }
 
 
-    @ApiOperation(value = "일정 등록")
+
     @PostMapping("/schedule")
-    public ScheduleResponseDto postSchedule(@RequestBody ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto postSchedule(@Valid @RequestBody ScheduleRequestDto requestDto) {
         return scheduleService.postSchedule(requestDto);
     }
 
 
-    @ApiOperation(value = "일정 목록 조회")
+
     @GetMapping("/schedule")
     public List<ScheduleResponseDto> getSchedules() {
         return scheduleService.getSchedules();
     }
 
 
-    @ApiOperation(value = "일정 조회")
+
     @GetMapping("/schedule/{id}")
     public ScheduleResponseDto getSchedule(@PathVariable Long id) {
         return scheduleService.getSchedule(id);
     }
 
 
-    @ApiOperation(value = "일정 수정")
+
     @PutMapping("/schedule/{id}")
-    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id,@Valid @RequestBody ScheduleRequestDto requestDto) {
         return scheduleService.updateSchedule(id, requestDto);
     }
 
 
-    @ApiOperation(value = "일정 삭제")
+
     @DeleteMapping("/schedule/{id}")
-    public Long deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
-        return scheduleService.deleteSchedule(id, requestDto.getPassword());
+    public Long deleteSchedule(@PathVariable Long id, @RequestBody String password) {
+        return scheduleService.deleteSchedule(id, password);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleCustomException(IllegalArgumentException ex) {
