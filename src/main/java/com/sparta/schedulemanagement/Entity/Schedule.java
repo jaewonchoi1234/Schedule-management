@@ -16,13 +16,13 @@ public class Schedule extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "title", nullable = false, length = 50)
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "contents", nullable = false, length = 500)
+    @Column(name = "contents", nullable = false)
     private String contents;
-    @Column(name = "manager", nullable = false, length = 50)
+    @Column(name = "manager", nullable = false)
     private String manager;
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password", nullable = false)
     private String password;
 
 
