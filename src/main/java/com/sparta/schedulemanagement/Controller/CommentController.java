@@ -3,6 +3,8 @@ package com.sparta.schedulemanagement.Controller;
 import com.sparta.schedulemanagement.Dto.CommentRequestDto;
 import com.sparta.schedulemanagement.Dto.CommentResponseDto;
 import com.sparta.schedulemanagement.Service.CommentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,5 +29,8 @@ public class CommentController {
         return commentService.updateComment(scheduleId, commentId, commentRequestDto);
     }
 
-
+    @DeleteMapping("/comment/{scheduleId}/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable Long scheduleId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto ) {
+        return ResponseEntity.ok(commentService.deleteComment(scheduleId, commentId, commentRequestDto));
+    }
 }

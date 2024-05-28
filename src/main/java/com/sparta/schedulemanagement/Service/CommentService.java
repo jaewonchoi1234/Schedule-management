@@ -44,6 +44,19 @@ public class CommentService {
         return comment.getComment();
     }
 
+    //댓글 삭제
+    public String deleteComment(Long scheduleId, Long commentId, CommentRequestDto commentRequestDto) {
+        scheduleRepository.findById(scheduleId).orElseThrow(()-> new NullPointerException("선택한 일정은 삭제되어 있습니다."));
 
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new NullPointerException("선택한 댓글은 저장되어 있지 않습니다."));
+
+        if (!comment.getUserId().equals(commentRequestDto.getUserId())) {
+            throw new IllegalArgumentException("선택한 댓글의 사용자가 현재 사용자와 일치하지 않습니다.");
+        }
+
+        commentRepository.delete(comment);
+
+        return "삭제 성공!!";
+    }
 
 }
