@@ -1,6 +1,7 @@
 package com.sparta.schedulemanagement.Controller;
 
 
+
 import com.sparta.schedulemanagement.Dto.ScheduleRequestDto;
 import com.sparta.schedulemanagement.Dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.Service.ScheduleService;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.HashMap;
 import java.util.List;
