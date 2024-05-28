@@ -1,14 +1,5 @@
 package com.sparta.schedulemanagement.Service;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import com.sparta.schedulemanagement.Dto.FileInfoRequestDto;
 import com.sparta.schedulemanagement.Dto.FileInfoResponseDto;
 import com.sparta.schedulemanagement.Entity.FileInfo;
 import com.sparta.schedulemanagement.Repository.FileInfoRepository;
@@ -18,6 +9,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class FileService {

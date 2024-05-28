@@ -22,4 +22,10 @@ public class CommentController {
         return commentService.createComment(scheduleId, commentRequestDto);
     }
 
+    @PutMapping("/comment/{scheduleId}/{commentId}")
+    public String updateComment(@PathVariable Long scheduleId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto ){
+        return commentService.updateComment(scheduleId, commentId, commentRequestDto);
+    }
+
+
 }
