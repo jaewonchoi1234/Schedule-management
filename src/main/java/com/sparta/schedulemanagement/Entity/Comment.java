@@ -29,9 +29,10 @@ public class Comment extends Timestamped {
     private Schedule schedule;
 
 
-    public Comment(CommentRequestDto requestDto, Schedule schedule) {
-            this.comment = requestDto.getComment();
-            this.userId = requestDto.getUserId();
+    public Comment(String comment, String userId, Schedule schedule) {
+            this.comment = comment;
+            this.userId = userId;
             this.schedule = schedule;
     }
+
 }
