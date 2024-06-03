@@ -1,8 +1,8 @@
 package com.sparta.schedulemanagement.security;
 
 
-import com.sparta.schedulemanagement.Entity.User;
-import com.sparta.schedulemanagement.Repository.UserRepository;
+import com.sparta.schedulemanagement.entity.User;
+import com.sparta.schedulemanagement.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
